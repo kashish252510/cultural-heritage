@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Accessible Image Narrator - For Visually Impaired Users</title>
+	<meta name="description" content="Upload images to get detailed audio descriptions for visually impaired users" />
+	<link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+	<header role="banner">
+		<h1>Accessible Image Narrator</h1>
+		<p class="subtitle">Upload an image to receive a detailed audio description</p>
+	</header>
+
+	<main class="container" role="main">
+		<section class="upload-section" aria-labelledby="upload-heading">
+			<h2 id="upload-heading">Upload Image</h2>
+			
+			<!-- Multiple upload options -->
+			<div class="upload-options">
+				<div class="upload-area" id="uploadArea" role="button" tabindex="0" aria-label="Click to upload an image or drag and drop an image file here">
+					<div class="upload-content">
+						<div class="upload-icon" aria-hidden="true">📷</div>
+						<p class="upload-text">Click here to select an image or drag and drop</p>
+						<p class="upload-formats">Supports: JPG, PNG, GIF, WebP</p>
+					</div>
+					<input type="file" id="fileInput" accept="image/*" aria-label="Select image file" style="display: none;" />
+				</div>
+				
+				<div class="upload-buttons">
+					<button id="browseButton" class="secondary-button">
+						<span class="button-icon" aria-hidden="true">📁</span>
+						Browse Files
+					</button>
+					<button id="cameraButton" class="secondary-button">
+						<span class="button-icon" aria-hidden="true">📸</span>
+						Take Photo
+					</button>
+				</div>
+			</div>
+			
+			<button id="narrateUpload" class="primary-button" disabled>
+				<span class="button-text">Describe Image</span>
+				<span class="button-icon" aria-hidden="true">🎤</span>
+			</button>
+		</section>
+
+		<section class="preferences" aria-labelledby="preferences-heading">
+			<h2 id="preferences-heading">Settings</h2>
+			<div class="pref-grid">
+				<div class="pref-group">
+					<label for="style">Description Style</label>
+					<select id="style" aria-describedby="style-help">
+						<option value="short">Short - Brief description</option>
+						<option value="detailed" selected>Detailed - Comprehensive description</option>
+					</select>
+					<small id="style-help">Choose how detailed you want the image description to be</small>
+				</div>
+				<div class="pref-group">
+					<label for="language">Language</label>
+					<select id="language" aria-describedby="language-help">
+						<option value="en" selected>English</option>
+						<option value="es">Spanish</option>
+						<option value="fr">French</option>
+						<option value="de">German</option>
+						<option value="it">Italian</option>
+						<option value="pt">Portuguese</option>
+						<option value="hi">Hindi</option>
+						<option value="ja">Japanese</option>
+						<option value="ko">Korean</option>
+						<option value="zh">Chinese</option>
+					</select>
+					<small id="language-help">Select the language for the audio description</small>
+				</div>
+				<div class="pref-group">
+					<label for="voice-speed">Voice Speed</label>
+					<select id="voice-speed" aria-describedby="speed-help">
+						<option value="slow">Slow</option>
+						<option value="normal" selected>Normal</option>
+						<option value="fast">Fast</option>
+					</select>
+					<small id="speed-help">Adjust the speaking speed of the audio description</small>
+				</div>
+			</div>
+		</section>
+
+		<section class="output" aria-labelledby="output-heading" aria-live="polite">
+			<h2 id="output-heading">Image Description</h2>
+			<div class="output-content">
+				<div class="status-indicator" id="status" aria-live="polite"></div>
+				<div class="description-text" id="text" role="region" aria-label="Image description"></div>
+				<div class="audio-controls" id="audioControls" style="display: none;">
+					<audio id="audio" controls aria-label="Audio description of the image">
+						Your browser does not support the audio element.
+					</audio>
+					<button id="replayAudio" class="secondary-button" aria-label="Replay audio description">
+						<span class="button-icon" aria-hidden="true">🔄</span>
+						Replay
+					</button>
+				</div>
+			</div>
+		</section>
+
+		<section class="help" aria-labelledby="help-heading">
+			<h2 id="help-heading">How to Use</h2>
+			<div class="help-content">
+				<ol>
+					<li>Click the upload area or drag and drop an image file</li>
+					<li>Adjust your preferences for description style and language</li>
+					<li>Click "Describe Image" to process your image</li>
+					<li>Listen to the audio description or read the text description</li>
+				</ol>
+				<p class="help-note">
+					<strong>Note:</strong> This tool is designed to help visually impaired users understand image content. 
+					It can detect objects, text, and describe scenes in detail.
+				</p>
+			</div>
+		</section>
+	</main>
+
+	<footer role="contentinfo">
+		<p>Accessible Image Narrator - Making images accessible through AI-powered descriptions</p>
+	</footer>
+
+	<!-- Hidden elements for processing -->
+	<video id="bgVideo" autoplay playsinline muted style="position:absolute; left:-9999px; width:1px; height:1px;" aria-hidden="true"></video>
+	<canvas id="hiddenCanvas" style="display:none;" aria-hidden="true"></canvas>
+	
+	<script src="/static/app.js"></script>
+</body>
+</html>
